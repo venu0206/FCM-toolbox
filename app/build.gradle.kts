@@ -14,8 +14,8 @@ val versionBuild = 0
 android {
     compileSdk = 36
     defaultConfig {
-        applicationId = "fr.smarquis.fcm"
-        namespace = "fr.smarquis.fcm"
+        applicationId = "com.venu.cdhpoc"
+        namespace = "com.venu.cdhpoc"
         minSdk = 23
         targetSdk = 36
         versionCode = versionMajor * 1000000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
