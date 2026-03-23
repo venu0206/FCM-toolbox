@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:157654622254:android:f1eff9fe7b4d8c87c03fbf",
+        "mobilesdk_app_id": "1:157654622254:android:5db6881d1660ff1bc03fbf",
         "android_client_info": {
-          "package_name": "fr.smarquis.fcm"
+          "package_name": "com.venu.cdhpoc"
         }
       },
       "oauth_client": [],
