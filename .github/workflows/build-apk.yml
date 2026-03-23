@@ -1,7 +1,9 @@
-name: Build FCM Test APK
+name: Build Android APK
 
 on:
-  workflow_dispatch:  # Manual trigger button
+  push:
+    branches: [ "main" ] # Or "master", check your default branch name
+  workflow_dispatch:      # This allows you to click a button to start the build
 
 jobs:
   build:
@@ -14,8 +16,8 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'zulu'
-          cache: 'gradle'
+          distribution: 'temurin'
+          cache: gradle
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -26,5 +28,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: FCM-Test-App
+          name: Pega-Test-App
           path: app/build/outputs/apk/debug/app-debug.apk
