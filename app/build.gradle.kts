@@ -2,7 +2,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.android.kotlin) // Re-added this
+    // Using direct ID to bypass the "None of the following candidates is applicable" error
+    id("org.jetbrains.kotlin.android") 
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.google.playServices)
 }
@@ -59,6 +60,7 @@ kotlin {
 }
 
 dependencies {
+    /* UI & Core */
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
@@ -67,14 +69,16 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.google.android.material)
 
+    /* Firebase */
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
 
+    /* DI & Database */
     implementation(libs.koin.android)
-    
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 
+    /* Testing */
     testImplementation(libs.junit)
 }
