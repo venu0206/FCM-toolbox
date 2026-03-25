@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.google.playServices)
-    id("kotlin-kapt") // Required for Data Binding
+    // Removed kotlin-kapt to fix compatibility error
 }
 
 val versionMajor = 1
@@ -13,7 +13,7 @@ val versionPatch = 1
 val versionBuild = 0
 
 android {
-    compileSdk = 35 // Adjusted for stability
+    compileSdk = 35
     namespace = "com.venu.cdhpoc"
 
     defaultConfig {
@@ -28,12 +28,12 @@ android {
 
     buildFeatures {
         viewBinding = true
-        dataBinding = true // Required for FCM Toolbox UI
+        dataBinding = true 
         buildConfig = true
     }
 
+    // Note: Ensure 'debug-keystore.jks' is in your /app folder
     signingConfigs {
-        // Ensure 'debug-keystore.jks' exists in your /app folder
         getByName("debug") {
             keyAlias = "fcm-toolbox"
             keyPassword = "fcm-toolbox"
@@ -78,7 +78,7 @@ ksp {
 }
 
 dependencies {
-    /* AndroidX */
+    /* AndroidX & UI */
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
@@ -87,10 +87,6 @@ dependencies {
     implementation(libs.androidx.preference.ktx)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.transition)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-
-    /* Material Design */
     implementation(libs.google.android.material)
 
     /* Firebase */
@@ -98,29 +94,28 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.database)
 
-    /* Koin: Dependency Injection */
+    /* DI & JSON */
     implementation(libs.koin.android)
-    testImplementation(libs.koin.test)
-    androidTestImplementation(libs.koin.test)
-
-    /* Moshi: JSON parsing */
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
     implementation(libs.moshi.adapters)
     ksp(libs.moshi.kotlin.codegen)
 
-    /* Room: SQLite persistence */
+    /* Room Persistence */
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
-    testImplementation(libs.androidx.room.testing)
 
+    /* Coroutines */
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.playServices)
 
+    /* Testing */
     testImplementation(libs.junit)
-    
-    // Data Binding compiler for Kotlin
-    kapt("com.android.databinding:compiler:8.2.0") 
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+
+    /* Data Binding Compiler (using KSP instead of Kapt) */
+    ksp("com.android.databinding:compiler:8.2.0") 
 }
