@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.google.playServices)
+    id("kotlin-kapt") // Required for Data Binding
 }
 
 val versionMajor = 1
@@ -12,22 +13,27 @@ val versionPatch = 1
 val versionBuild = 0
 
 android {
-    compileSdk = 36
+    compileSdk = 35 // Adjusted for stability
+    namespace = "com.venu.cdhpoc"
+
     defaultConfig {
         applicationId = "com.venu.cdhpoc"
-        namespace = "com.venu.cdhpoc"
         minSdk = 23
-        targetSdk = 36
+        targetSdk = 35
         versionCode = versionMajor * 1000000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
         versionName = "$versionMajor.$versionMinor.$versionPatch"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
     }
+
     buildFeatures {
         viewBinding = true
+        dataBinding = true // Required for FCM Toolbox UI
         buildConfig = true
     }
+
     signingConfigs {
+        // Ensure 'debug-keystore.jks' exists in your /app folder
         getByName("debug") {
             keyAlias = "fcm-toolbox"
             keyPassword = "fcm-toolbox"
@@ -35,6 +41,7 @@ android {
             storeFile = file("debug-keystore.jks")
         }
     }
+
     buildTypes {
         debug {
             signingConfig = signingConfigs.getByName("debug")
@@ -44,6 +51,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -112,4 +120,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.playServices)
 
     testImplementation(libs.junit)
+    
+    // Data Binding compiler for Kotlin
+    kapt("com.android.databinding:compiler:8.2.0") 
 }
