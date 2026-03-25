@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.google.playServices)
-    // Removed kotlin-kapt to fix compatibility error
 }
 
 val versionMajor = 1
@@ -32,7 +31,6 @@ android {
         buildConfig = true
     }
 
-    // Note: Ensure 'debug-keystore.jks' is in your /app folder
     signingConfigs {
         getByName("debug") {
             keyAlias = "fcm-toolbox"
@@ -116,6 +114,5 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    /* Data Binding Compiler (using KSP instead of Kapt) */
-    ksp("com.android.databinding:compiler:8.2.0") 
+    // REMOVED: com.android.databinding:compiler (Not needed for modern AGP)
 }
